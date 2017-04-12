@@ -20,8 +20,8 @@ const T3OptionsUserAvatar = (props) => {
     <div className="t3-options-user-avatar text-center column small-12">
       <h4>X or O?</h4>
       <div className="button-group">
-        {renderUserAvatarButton(SPEX.userAvatar.x)}
-        {renderUserAvatarButton(SPEX.userAvatar.o)}
+        {renderUserAvatarButton(SPEX.avatar.x)}
+        {renderUserAvatarButton(SPEX.avatar.o)}
       </div>
     </div>
   );

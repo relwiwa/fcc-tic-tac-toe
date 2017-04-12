@@ -7,8 +7,8 @@ const T3Dialog = (props) => {
 
   return (
     <div className="t3-dialog-text callout primary">
-      {gameResult === SPEX.turn.user && 'You won!'}    
-      {gameResult === SPEX.turn.ai && 'You lost!'}    
+      {gameResult === SPEX.player.user && 'You won!'}    
+      {gameResult === SPEX.player.ai && 'You lost!'}    
       {gameResult === null && 'It is a tie!'}    
     </div>
   );

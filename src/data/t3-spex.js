@@ -1,9 +1,9 @@
 const SPEX = {
-  turn: {
+  player: {
     user: 'user',
     ai: 'ai'
   },
-  userAvatar: {
+  avatar: {
     x: 'x',
     o: 'o'
   },

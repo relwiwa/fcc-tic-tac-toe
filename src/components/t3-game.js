@@ -48,7 +48,7 @@ class T3Game extends Component {
     let newState = {};
     if (boardStatus.gameOver === false) {
       newState.board = newBoard;
-      newState.turn = (turn === SPEX.turn.user) ? SPEX.turn.ai : SPEX.turn.user;
+      newState.turn = (turn === SPEX.player.user) ? SPEX.player.ai : SPEX.player.user;
     }
     else {
       newState.board = newBoard;
@@ -61,38 +61,41 @@ class T3Game extends Component {
   setupTurn() {
     const { difficulty } = this.state;
     if (difficulty === SPEX.difficulty.easy) {
-      return SPEX.turn.user;
+      return SPEX.player.user;
     }
     else if (difficulty === SPEX.difficulty.medium) {
-      return (Math.random() > SPEX.mediumRandomFactor) ? SPEX.turn.ai : SPEX.turn.user;        
+      return (Math.random() > 0.5) ? SPEX.player.ai : SPEX.player.user;        
     }
     else {
-      return SPEX.turn.ai;
+      return SPEX.player.ai;
     }
   }
 
   render() {
     const { board, difficulty, gameHistory, gameStatus, showOptions, turn, userAvatar } = this.state;
+    const aiAvatar = (userAvatar !== null ? ((userAvatar === SPEX.avatar.x) ? SPEX.avatar.o : SPEX.avatar.x) : null);
 
     return (
       <div className="t3-game row column medium-8">
         <h1 className="text-center">
-          Tic Tac Toe Game
+          Tic Tac Toe
         </h1>
         {(gameStatus === SPEX.gameStatus.ended && !showOptions) && <T3Dialog
           gameResult={gameHistory[gameHistory.length - 1].winner}
         />}
         {showOptions && <T3Options
+          aiAvatar={aiAvatar}
           difficulty={difficulty}
           userAvatar={userAvatar}
           onChangeDifficulty={(event, difficulty) => this.handleChangeDifficulty(event, difficulty)}
           onChangeUserAvatar={(event, userAvatar) => this.handleChangeUserAvatar(event, userAvatar)}
         />}
         {((gameStatus === SPEX.gameStatus.started || gameStatus === SPEX.gameStatus.ended) && !showOptions) && <T3Board
+          aiAvatar={aiAvatar}
           board={board}
           difficulty={difficulty}
-          gameStatus={gameStatus}
           gameHistory={gameHistory}
+          gameStatus={gameStatus}
           turn={turn}
           userAvatar={userAvatar}
           onMove={(newBoard, boardStatus) => this.handleMove(newBoard, boardStatus)}

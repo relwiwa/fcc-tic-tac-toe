@@ -21,7 +21,7 @@ const T3Cell = (props) => {
     <div className="t3-cell column column-block text-center">
       <div
         className={isWinningCell ? 'cell-active' : ''}
-        onClick={(turn === SPEX.turn.user && cellData === '-') ? (event) => onUserMove(event, cellId) : null}
+        onClick={(gameStatus === SPEX.gameStatus.started && turn === SPEX.player.user && cellData === '-') ? (event) => onUserMove(event, cellId) : null}
       >
         <span>
           {cellData !== '-' ? cellData : ''}
