@@ -1,0 +1,56 @@
+// Customization
+
+$foundation-palette: (
+  primary: #1779ba,
+  secondary: #767676,
+  success: #3adb76,
+  warning: #ffae00,
+  alert: #cc4b37,
+  selection: #ffae00,
+);
+
+
+$grid-column-gutter: (
+  small: 0px,
+  medium: 0px,
+);
+
+@import '../../node_modules/foundation-sites/scss/foundation.scss';
+
+@include foundation-everything;
+
+.t3-cell div {
+  position: relative;
+  display: inline-block;
+  width: 80%;
+  padding-bottom: 80%;
+  background: map-get($foundation-palette, primary);
+}
+
+.t3-cell div.cell-active {
+  background: map-get($foundation-palette, selection);
+}
+
+.t3-cell span {
+  position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 14px;
+	transform: translate(-50%, -50%);
+  color: white;
+  font-weight: bold;
+}
+
+.t3-status {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.status-avatar-active {
+  font-weight: bold;
+  color: map-get($foundation-palette, selection);
+}
+
+.t3-controls {
+  margin-top:25px;
+}
