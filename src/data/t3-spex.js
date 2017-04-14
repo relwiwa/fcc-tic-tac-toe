@@ -16,7 +16,11 @@ const SPEX = {
     started: 'started',
     ended: 'ended'
   },
-  mediumRandomFactor: 0.8
+  randomMoveFactors: {
+    easy: 0.2,
+    medium: 0.8
+  },
+  timeoutAiMove: 1200
 };
 
 export default SPEX;

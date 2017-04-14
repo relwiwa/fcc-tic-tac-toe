@@ -27,8 +27,13 @@ $grid-column-gutter: (
   background: map-get($foundation-palette, primary);
 }
 
-.t3-cell div.cell-active {
+.t3-cell div.active {
   background: map-get($foundation-palette, selection);
+}
+
+.t3-cell div.hoverable:hover {
+  cursor:pointer;
+  background:scale-color(map-get($foundation-palette, primary), $lightness: -15%)
 }
 
 .t3-cell span {

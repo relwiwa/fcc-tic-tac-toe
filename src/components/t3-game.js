@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 
-import T3Board from './t3-board';
+import T3GameBoard from './t3-game-board';
 import T3Controls from './t3-controls';
-import T3Dialog from './t3-dialog';
 import T3Options from './t3-options';
 
 import SPEX from '../data/t3-spex';
@@ -97,16 +96,13 @@ class T3Game extends Component {
         <h1 className="text-center">
           Tic Tac Toe
         </h1>
-        {(gameStatus === SPEX.gameStatus.ended && !showOptions) && <T3Dialog
-          gameResult={gameHistory[gameHistory.length - 1].winner}
-        />}
         {showOptions && <T3Options
           difficulty={difficulty}
           player1={player1}
           onChangeDifficulty={(event, difficulty) => this.handleChangeDifficulty(event, difficulty)}
           onChangeAvatar={(event, avatar) => this.handleChangeAvatar(event, avatar)}
         />}
-        {((gameStatus === SPEX.gameStatus.started || gameStatus === SPEX.gameStatus.ended) && !showOptions) && <T3Board
+        {((gameStatus === SPEX.gameStatus.started || gameStatus === SPEX.gameStatus.ended) && !showOptions) && <T3GameBoard
           board={board}
           currentPlayer={currentPlayer}
           difficulty={difficulty}
