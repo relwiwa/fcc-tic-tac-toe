@@ -11,24 +11,21 @@ class T3Board extends Component {
   }
 
   componentDidMount() {
-    const { turn } = this.props;
+    const { currentPlayer } = this.props;
     this.boardStati = {};
-    if (turn === SPEX.player.ai) {
-      this.getAiMove();
+    if (currentPlayer.type === SPEX.player.ai) {
+      window.setTimeout(() => {
+        this.getAiMove();
+      }, 2000);
     }
   }
 
   componentDidUpdate() {
-    const { difficulty, gameStatus, turn } = this.props;
-    if (gameStatus === SPEX.gameStatus.started && turn === SPEX.player.ai) {
-      if (difficulty === SPEX.difficulty.hard) {
-        this.getAiMove();        
-      }
-      else {
-        window.setTimeout(() => {
-          this.getAiMove();
-        }, 800);
-      }
+    const { currentPlayer, difficulty, gameStatus } = this.props;
+    if (gameStatus === SPEX.gameStatus.started && currentPlayer.type === SPEX.player.ai) {
+      window.setTimeout(() => {
+        this.getAiMove();
+      }, 2000);
     }
   }
 
@@ -44,28 +41,32 @@ class T3Board extends Component {
   }
 
   calculateAiMoveHard() {
-    const { board, turn } = this.props;
+    const { board, currentPlayer } = this.props;
     if (board === '---------') {
       return Math.floor(Math.random() * 8);
     }
-    let aiMove = this.minimax(board, SPEX.player.ai)
+    let aiMove = this.minimax(board, currentPlayer)
     return aiMove.cell;
   }
 
   /*  minimax implementation adapted from:
-      https://medium.freecodecamp.com/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37 */
+      https://medium.freecodecamp.com/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37
+      it evaluates board and turn in relation to currentPlayer */
   minimax(board, turn) {
-    const { aiAvatar, userAvatar } = this.props;
-    const boardStatus = this.getBoardStatus(board, turn);
+    const { currentPlayer, player1, player2 } = this.props;
+    const boardStatus = this.getBoardStatus(board);
+
     if (boardStatus.gameOver === true) {
-      if (boardStatus.winner === SPEX.player.ai) {
-        return { result: 30 };
-      }
-      else if (boardStatus.winner === SPEX.player.user) {
-        return { result: -30 };
+      if (boardStatus.winner === null) {
+        return { result: 0 };
       }
       else {
-        return { result: 0 };
+        if (boardStatus.winner === currentPlayer) {
+          return { result: 30 };
+        }
+        else {
+          return { result: -30 };
+        }
       }
     }
     // game is not over yet
@@ -82,18 +83,21 @@ class T3Board extends Component {
       // store move object with result in moves array
       for (let i = 0; i < emptyCells.length; i++) {
         let move = {
-          avatar: turn === SPEX.player.ai ? aiAvatar : userAvatar,
+          avatar: turn.avatar,
           cell: emptyCells[i]
         };
         const newBoard = board.substr(0, move.cell) + move.avatar + board.substr(move.cell + 1);
-        const result = this.minimax(newBoard, (turn === SPEX.player.ai ? SPEX.player.user : SPEX.player.ai));
+        const result = this.minimax(newBoard, (turn === player1 ? player2 : player1));
         move.result = result.result;
         moves.push(move);
       }
 
       // when results for all the moves possible for this board are done, get best move
       let bestMove;
-      if (turn === SPEX.player.ai) {
+      /* internal minimax turn gets compared to overall currentPlayer:
+         - if it is currentPlayers turn in the overall game, maximize score,
+         - if it is not currentPlayers turn in the overall game, minimize score */
+      if (turn === currentPlayer) {
         let maxScore = -50;
         for (let i = 0; i < moves.length; i++) {
           if (moves[i].result > maxScore) {
@@ -116,7 +120,7 @@ class T3Board extends Component {
   }
 
   calculateBoardStatus(boardToCheck) {
-    const { userAvatar } = this.props;
+    const { player1, player2 } = this.props;
 		let result = {};
     result.gameOver = false;
     let emptyCells = 0;
@@ -134,7 +138,7 @@ class T3Board extends Component {
         if (boardToCheck[i] !== '-') { // check is only necessary if first cell of row is not empty
           if (boardToCheck[i] === boardToCheck[i + 1] && boardToCheck[i + 1] === boardToCheck[i + 2]) {
             result.gameOver = true;
-            result.winner = boardToCheck[i] === userAvatar ? SPEX.player.user : SPEX.player.ai;
+            result.winner = boardToCheck[i] === player1.avatar ? player1 : player2;
             result.cells = [i, i + 1, i + 2];
             return result;
           }
@@ -144,7 +148,7 @@ class T3Board extends Component {
         if (boardToCheck[i / 3] !== '-') { // check is only necessary if first cell of column is not empty
           if (boardToCheck[i / 3] === boardToCheck[i / 3 + 3] && boardToCheck[i / 3 + 3] === boardToCheck[i / 3 + 6]) {
             result.gameOver = true;
-            result.winner = boardToCheck[i / 3] === userAvatar ? SPEX.player.user : SPEX.player.ai;
+            result.winner = boardToCheck[i / 3] === player1.avatar ? player1 : player2;
             result.cells = [i / 3, i / 3 + 3, i / 3 + 6];
             return result;
           }
@@ -154,7 +158,7 @@ class T3Board extends Component {
 				if (boardToCheck[0] !== '-') {
 					if (boardToCheck[0] === boardToCheck[4] && boardToCheck[4] === boardToCheck[8]) {
 						result.gameOver = true,
-						result.winner = boardToCheck[0] === userAvatar ? SPEX.player.user : SPEX.player.ai
+						result.winner = boardToCheck[0] === player1.avatar ? player1 : player2;
 						result.cells = [0, 4, 8];
             return result;
 					}
@@ -162,7 +166,7 @@ class T3Board extends Component {
 				if (boardToCheck[2] !== '-') {
 					if (boardToCheck[2] === boardToCheck[4] && boardToCheck[4] === boardToCheck[6]) {
 						result.gameOver = true,
-						result.winner = boardToCheck[2] === userAvatar ? SPEX.player.user : SPEX.player.ai
+						result.winner = boardToCheck[2] === player1.avatar ? player1 : player2;
 						result.cells = [2, 4, 6];
             return result;
 					}
@@ -178,7 +182,7 @@ class T3Board extends Component {
   }
 
   getAiMove() {
-    const { aiAvatar, board, difficulty, onMove, turn, userAvatar } = this.props;
+    const { board, currentPlayer, difficulty, onMove } = this.props;
     let aiMove = null;
     if (difficulty === SPEX.difficulty.easy) {
       aiMove = this.calculateAiMoveEasy();
@@ -190,9 +194,9 @@ class T3Board extends Component {
       aiMove = this.calculateAiMoveHard();
     }
     let newBoard = board.substr(0, aiMove);
-    newBoard += aiAvatar;
+    newBoard += currentPlayer.avatar;
     newBoard += board.substr(aiMove + 1);
-    const boardStatus = this.getBoardStatus(newBoard, turn);
+    const boardStatus = this.getBoardStatus(newBoard);
     onMove(newBoard, boardStatus);
   }
 
@@ -207,25 +211,25 @@ class T3Board extends Component {
   }
 
   handleUserMove(event, cellId) {
-    const { board, onMove, turn, userAvatar } = this.props;
+    const { board, currentPlayer, onMove } = this.props;
     let newBoard = board.substr(0, cellId);
-    newBoard += userAvatar;
+    newBoard += currentPlayer.avatar;
     newBoard += board.substr(cellId + 1);
-    const boardStatus = this.getBoardStatus(newBoard, turn);
+    const boardStatus = this.getBoardStatus(newBoard);
     onMove(newBoard, boardStatus);
   }
 
   renderCells() {
-    const { board, gameHistory, gameStatus, turn } = this.props;
+    const { board, currentPlayer, gameHistory, gameStatus } = this.props;
     let cells = [];
     for (let i = 0; i < board.length; i++) {
       cells.push(
         <T3Cell
           cellData={board[i]}
           cellId={i}
+          currentPlayer={currentPlayer}
           gameHistory={gameHistory}
           gameStatus={gameStatus}
-          turn={turn}
           onUserMove={(event, cellId) => this.handleUserMove(event, cellId)}
         />
       );
@@ -234,17 +238,17 @@ class T3Board extends Component {
   };
 
   render() {
-    const { aiAvatar, board, difficulty, gameHistory, turn, userAvatar } = this.props;
+    const { board, currentPlayer, difficulty, gameHistory, player1, player2 } = this.props;
 
     return (
       <div className="t3-board row">
         <div className="column medium-offset-1 medium-10 large-offset-3 large-6">
           <T3Status
-            aiAvatar={aiAvatar}
+            currentPlayer={currentPlayer}
             difficulty={difficulty}
             gameHistory={gameHistory}
-            turn={turn}
-            userAvatar={userAvatar}
+            player1={player1}
+            player2={player2}
           />
           <div className="t3-row row small-up-3">
             {this.renderCells()}

@@ -12,13 +12,27 @@ class T3Game extends Component {
     super(props);
     this.state = {
       board: '---------',
+      currentPlayer: null, // player1 object || player2 object
       difficulty: null, // just-kiddin || regular || impossible
       gameHistory: [], // user || ai || tie
       gameStatus: null,
+      player1: null,
+      player2: null,
       showOptions: true,
-      turn: null, // user || ai
-      userAvatar: null // x || y
     }
+  }
+
+  componentWillMount() {
+    this.setState({
+      player1: {
+        type: SPEX.player.ai,
+        avatar: null,
+      },
+      player2: {
+        type: SPEX.player.ai,
+        avatar: null,
+      }
+    });
   }
 
   handleChangeDifficulty(event, difficulty) {
@@ -27,28 +41,32 @@ class T3Game extends Component {
     });
   }
 
-  handleChangeUserAvatar(event, userAvatar) {
-    this.setState({
-      userAvatar
-    });
+  handleChangeAvatar(event, avatar) {
+    const { player1, player2 } = this.state;
+    let newState = {}
+    newState.player1 = player1;
+    newState.player1.avatar = avatar;
+    newState.player2 = player2;
+    newState.player2.avatar = avatar === SPEX.avatar.x ? SPEX.avatar.o : SPEX.avatar.x; 
+    this.setState(newState);
   }
 
   handleStartGame() {
     const { difficulty } = this.state;
     this.setState({
       board: '---------',
+      currentPlayer: this.setupCurrentPlayer(),
       gameStatus: SPEX.gameStatus.started,
-      turn: this.setupTurn(),
       showOptions: false,
     });
   }
 
   handleMove(newBoard, boardStatus) {
-    const { board, gameHistory, turn, userAvatar } = this.state;
+    const { board, currentPlayer, gameHistory, player1, player2 } = this.state;
     let newState = {};
     if (boardStatus.gameOver === false) {
       newState.board = newBoard;
-      newState.turn = (turn === SPEX.player.user) ? SPEX.player.ai : SPEX.player.user;
+      newState.currentPlayer = (currentPlayer === player1) ? player2 : player1;
     }
     else {
       newState.board = newBoard;
@@ -58,22 +76,21 @@ class T3Game extends Component {
     this.setState(newState);
   }
 
-  setupTurn() {
-    const { difficulty } = this.state;
+  setupCurrentPlayer() {
+    const { difficulty, player1, player2 } = this.state;
     if (difficulty === SPEX.difficulty.easy) {
-      return SPEX.player.user;
+      return player1;
     }
     else if (difficulty === SPEX.difficulty.medium) {
-      return (Math.random() > 0.5) ? SPEX.player.ai : SPEX.player.user;        
+      return (Math.random() > 0.5) ? player1 : player2;        
     }
     else {
-      return SPEX.player.ai;
+      return player2;
     }
   }
 
   render() {
-    const { board, difficulty, gameHistory, gameStatus, showOptions, turn, userAvatar } = this.state;
-    const aiAvatar = (userAvatar !== null ? ((userAvatar === SPEX.avatar.x) ? SPEX.avatar.o : SPEX.avatar.x) : null);
+    const { board, currentPlayer, difficulty, gameHistory, gameStatus, player1, player2, showOptions } = this.state;
 
     return (
       <div className="t3-game row column medium-8">
@@ -84,27 +101,26 @@ class T3Game extends Component {
           gameResult={gameHistory[gameHistory.length - 1].winner}
         />}
         {showOptions && <T3Options
-          aiAvatar={aiAvatar}
           difficulty={difficulty}
-          userAvatar={userAvatar}
+          player1={player1}
           onChangeDifficulty={(event, difficulty) => this.handleChangeDifficulty(event, difficulty)}
-          onChangeUserAvatar={(event, userAvatar) => this.handleChangeUserAvatar(event, userAvatar)}
+          onChangeAvatar={(event, avatar) => this.handleChangeAvatar(event, avatar)}
         />}
         {((gameStatus === SPEX.gameStatus.started || gameStatus === SPEX.gameStatus.ended) && !showOptions) && <T3Board
-          aiAvatar={aiAvatar}
           board={board}
+          currentPlayer={currentPlayer}
           difficulty={difficulty}
           gameHistory={gameHistory}
           gameStatus={gameStatus}
-          turn={turn}
-          userAvatar={userAvatar}
+          player1={player1}
+          player2={player2}
           onMove={(newBoard, boardStatus) => this.handleMove(newBoard, boardStatus)}
         />}
         {(gameStatus !== SPEX.gameStatus.started) && <T3Controls
           difficulty={difficulty}
           numberOfRounds={gameHistory.length}
+          player1={player1}
           showOptions={showOptions}
-          userAvatar={userAvatar}
           onShowOptions={() => this.setState({ showOptions: true })}
           onStartGame={() => this.handleStartGame()}
         />}

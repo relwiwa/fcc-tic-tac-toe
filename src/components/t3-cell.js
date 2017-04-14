@@ -3,7 +3,7 @@ import React from 'react';
 import SPEX from '../data/t3-spex';
 
 const T3Cell = (props) => {
-  const { cellData, cellId, gameHistory, gameStatus, onUserMove, turn } = props;
+  const { cellData, cellId, currentPlayer, gameHistory, gameStatus, onUserMove } = props;
   
   const checkWinningCell = () => {
     if (gameStatus === SPEX.gameStatus.ended) {
@@ -21,7 +21,7 @@ const T3Cell = (props) => {
     <div className="t3-cell column column-block text-center">
       <div
         className={isWinningCell ? 'cell-active' : ''}
-        onClick={(gameStatus === SPEX.gameStatus.started && turn === SPEX.player.user && cellData === '-') ? (event) => onUserMove(event, cellId) : null}
+        onClick={(gameStatus === SPEX.gameStatus.started && currentPlayer.type === SPEX.player.user && cellData === '-') ? (event) => onUserMove(event, cellId) : null}
       >
         <span>
           {cellData !== '-' ? cellData : ''}
