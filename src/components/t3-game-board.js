@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 
 import T3Board from './t3-board';
-import T3Status from './t3-status';
 
 import SPEX from '../data/t3-spex';
 
@@ -300,10 +299,11 @@ class T3GameBoard extends Component {
       let cellSpec = {};
       cellSpec.content = board[i] === '-' ? '' : board[i];
       if (gameStatus !== SPEX.gameStatus.ended) {
-        cellSpec.onUserMove = (currentPlayer.type === SPEX.player.user && board[i] === '-')
+        cellSpec.onClick = (currentPlayer.type === SPEX.player.user && board[i] === '-')
           ? (event) => this.handleMove(i)
           : null;
       }
+      cellSpec.key = i;
       cellSpex.push(cellSpec);
     }
     if (gameStatus === SPEX.gameStatus.ended) {
@@ -345,22 +345,19 @@ class T3GameBoard extends Component {
   }
 
   render() {
-    const { board, currentPlayer, difficulty, gameHistory, player1, player2 } = this.props;
+    const { currentPlayer, difficulty, gameHistory, gameStatus, player1, player2 } = this.props;
 
     return (
-      <div className="t3-board row">
-        <div className="column medium-offset-1 medium-10 large-offset-3 large-6">
-          <T3Status
-            currentPlayer={currentPlayer}
-            difficulty={difficulty}
-            gameHistory={gameHistory}
-            player1={player1}
-            player2={player2}
-          />
-          <T3Board
-            cellSpex={this.setupCellSpex()}
-          />
-        </div>
+      <div className="t3-game-board">
+        <T3Board
+          cellSpex={this.setupCellSpex()}
+          currentPlayer={currentPlayer}
+          difficulty={difficulty}
+          gameHistory={gameHistory}
+          gameStatus={gameStatus}
+          player1={player1}
+          player2={player2}
+        />
       </div>
     );
   };

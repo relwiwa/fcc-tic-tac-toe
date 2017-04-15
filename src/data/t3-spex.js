@@ -8,9 +8,14 @@ const SPEX = {
     o: 'o'
   },
   difficulty: {
-    easy: 'easy',
-    medium: 'medium',
-    hard: 'hard'
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard'
+  },
+  gameMode: {
+    demo: 'demo',
+    onePlayer: '1 Player',
+    twoPlayer: '2 Player'
   },
   gameStatus: {
     started: 'started',
