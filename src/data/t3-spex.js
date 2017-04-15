@@ -25,7 +25,8 @@ const SPEX = {
     easy: 0.2,
     medium: 0.8
   },
-  timeoutAiMove: 1200
+  timeoutAiMove: 1500,
+  timeoutDemoGame: 5000,  
 };
 
 export default SPEX;

@@ -36,10 +36,10 @@ const T3OptionsBoard = (props) => {
   const setupInstructionCell = (cellSpex, cell) => {
     cellSpex[cell].status = 'static';    
     if (gameMode === null) {
-      cellSpex[cell].content = 'Chose Game Mode';
+      cellSpex[cell].content = 'Chose Players';
     }
     else if (player1.avatar === null) {
-      cellSpex[cell].content = 'Chose Player 1 Avatar';
+      cellSpex[cell].content = 'Chose Avatar';
     }
     else if (difficulty === null && gameMode !== SPEX.gameMode.twoPlayer) {
       cellSpex[cell].content = 'Chose Difficulty';      
@@ -73,6 +73,7 @@ const T3OptionsBoard = (props) => {
         currentPlayer={currentPlayer}
         difficulty={difficulty}
         gameHistory={gameHistory}
+        gameMode={gameMode}
         gameStatus={gameStatus}
         player1={player1}
         player2={player2}

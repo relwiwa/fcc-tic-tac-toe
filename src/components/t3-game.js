@@ -13,6 +13,7 @@ class T3Game extends Component {
     this.state = {
       board: '---------',
       currentPlayer: null, // player1 object || player2 object
+      demoTimeout: null,
       difficulty: null, // just-kiddin || regular || impossible
       gameHistory: [], // user || ai || tie
       gameMode: null,
@@ -66,21 +67,32 @@ class T3Game extends Component {
     if (boardStatus.gameOver === false) {
       newState.board = newBoard;
       newState.currentPlayer = (currentPlayer === player1) ? player2 : player1;
+      this.setState(newState);
     }
     else {
       newState.board = newBoard;
       newState.gameStatus = SPEX.gameStatus.ended;
       newState.gameHistory = gameHistory.concat(boardStatus);
+      if (this.state.gameMode === SPEX.gameMode.demo) {
+        newState.demoTimeout = window.setTimeout(() => {
+          this.setupDemoGame();
+        }, SPEX.timeoutDemoGame)
+      }
+      this.setState(newState);
     }
-    this.setState(newState);
   }
 
   handleSetupInitialGame() {
+    if (this.state.demoTimeout !== null) {
+      clearTimeout(this.state.demoTimeout);
+    }
     this.setState({
       board: '---------',
       currentPlayer: null,
+      demoTimeout: null,
       difficulty: null,
       gameMode: null,
+      gameHistory: [],
       gameStatus: null,
       player1: {
         avatar: null,
@@ -105,12 +117,12 @@ class T3Game extends Component {
   }
 
   setupCurrentPlayer() {
-    const { difficulty, player1, player2 } = this.state;
-    if (difficulty === SPEX.difficulty.easy) {
-      return player1;
-    }
-    else if (difficulty === SPEX.difficulty.medium) {
+    const { difficulty, gameMode, player1, player2 } = this.state;
+    if (difficulty === SPEX.difficulty.medium || gameMode === SPEX.gameMode.twoPlayer) {
       return (Math.random() > 0.5) ? player1 : player2;        
+    }
+    else if (difficulty === SPEX.difficulty.easy) {
+      return player1;
     }
     else {
       return player2;
@@ -161,6 +173,7 @@ class T3Game extends Component {
           currentPlayer={currentPlayer}
           difficulty={difficulty}
           gameHistory={gameHistory}
+          gameMode={gameMode}
           gameStatus={gameStatus}
           player1={player1}
           player2={player2}

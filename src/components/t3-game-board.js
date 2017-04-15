@@ -19,25 +19,34 @@ import SPEX from '../data/t3-spex';
 class T3GameBoard extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      timeoutAiMove: null
+    };
   }
 
   componentDidMount() {
     const { currentPlayer } = this.props;
     this.boardStati = {};
     if (currentPlayer.type === SPEX.player.ai) {
-      window.setTimeout(() => {
+      this.timeoutAiMove = window.setTimeout(() => {
         this.getAiMove();
-      }, SPEX.timeoutAiMove);
+      }, SPEX.timeoutAiMove)
     }
   }
 
   componentDidUpdate() {
     const { currentPlayer, difficulty, gameStatus } = this.props;
     if (gameStatus === SPEX.gameStatus.started && currentPlayer.type === SPEX.player.ai) {
-      window.setTimeout(() => {
+      this.timeoutAiMove = window.setTimeout(() => {
         this.getAiMove();
       }, SPEX.timeoutAiMove);
     }
+  }
+
+  componentWillUnmount() {
+    if (this.timeoutAiMove) {
+      clearTimeout(this.timeoutAiMove);
+    }    
   }
 
   /**
@@ -235,14 +244,11 @@ class T3GameBoard extends Component {
   getAiMove() {
     const { board, currentPlayer, difficulty, onMove } = this.props;
     let aiMove = null;
-    if (difficulty === SPEX.difficulty.easy) {
-      aiMove = (Math.random() > SPEX.randomMoveFactors.easy) ? this.calculateRandomMove() : this.calculateBestMove();
-    }
-    else if (difficulty === SPEX.difficulty.medium) {
-      aiMove = (Math.random() > SPEX.randomMoveFactors.medium) ? this.calculateRandomMove() : this.calculateBestMove();
+    if (difficulty === SPEX.difficulty.hard) {
+      aiMove = this.calculateBestMove();
     }
     else {
-      aiMove = this.calculateBestMove();
+      aiMove = (Math.random() > SPEX.randomMoveFactors[difficulty.toLowerCase()] ? this.calculateRandomMove() : this.calculateBestMove());
     }
     this.handleMove(aiMove);
   }
@@ -345,7 +351,7 @@ class T3GameBoard extends Component {
   }
 
   render() {
-    const { currentPlayer, difficulty, gameHistory, gameStatus, player1, player2 } = this.props;
+    const { currentPlayer, difficulty, gameHistory, gameMode, gameStatus, player1, player2 } = this.props;
 
     return (
       <div className="t3-game-board">
@@ -354,6 +360,7 @@ class T3GameBoard extends Component {
           currentPlayer={currentPlayer}
           difficulty={difficulty}
           gameHistory={gameHistory}
+          gameMode={gameMode}
           gameStatus={gameStatus}
           player1={player1}
           player2={player2}
