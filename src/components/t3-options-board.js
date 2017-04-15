@@ -67,18 +67,16 @@ const T3OptionsBoard = (props) => {
   }
  
   return (
-    <div className="t3-options-board">
-      <T3Board
-        cellSpex={setupOptionCellSpex()}
-        currentPlayer={currentPlayer}
-        difficulty={difficulty}
-        gameHistory={gameHistory}
-        gameMode={gameMode}
-        gameStatus={gameStatus}
-        player1={player1}
-        player2={player2}
-      />
-    </div>
+    <T3Board
+      cellSpex={setupOptionCellSpex()}
+      currentPlayer={currentPlayer}
+      difficulty={difficulty}
+      gameHistory={gameHistory}
+      gameMode={gameMode}
+      gameStatus={gameStatus}
+      player1={player1}
+      player2={player2}
+    />
   );
 }
 

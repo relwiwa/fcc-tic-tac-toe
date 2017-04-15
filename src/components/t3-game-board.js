@@ -354,18 +354,16 @@ class T3GameBoard extends Component {
     const { currentPlayer, difficulty, gameHistory, gameMode, gameStatus, player1, player2 } = this.props;
 
     return (
-      <div className="t3-game-board">
-        <T3Board
-          cellSpex={this.setupCellSpex()}
-          currentPlayer={currentPlayer}
-          difficulty={difficulty}
-          gameHistory={gameHistory}
-          gameMode={gameMode}
-          gameStatus={gameStatus}
-          player1={player1}
-          player2={player2}
-        />
-      </div>
+      <T3Board
+        cellSpex={this.setupCellSpex()}
+        currentPlayer={currentPlayer}
+        difficulty={difficulty}
+        gameHistory={gameHistory}
+        gameMode={gameMode}
+        gameStatus={gameStatus}
+        player1={player1}
+        player2={player2}
+      />
     );
   };
 }

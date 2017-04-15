@@ -10,11 +10,21 @@ $foundation-palette: (
   static: #378fff,
 );
 
-
 $grid-column-gutter: (
   small: 0px,
   medium: 0px,
 );
+
+$breakpoints: (
+  small: 0,
+  medium: 500px,
+  large: 800px,
+  xlarge: 1000px,
+);
+
+$breakpoint-classes: (small medium large xlarge);
+
+$borderColor: #ffffff;
 
 @import '../../node_modules/foundation-sites/scss/foundation.scss';
 
@@ -22,9 +32,9 @@ $grid-column-gutter: (
 
 .t3-cell div {
   position: relative;
-  display: inline-block;
-  width: 80%;
-  padding-bottom: 80%;
+  width: 100%;
+  padding-bottom: 100%;
+  border:5px solid $borderColor;
   background: map-get($foundation-palette, primary);
 }
 
@@ -46,7 +56,7 @@ $grid-column-gutter: (
   position: absolute;
 	top: 50%;
 	left: 50%;
-	font-size: 14px;
+	font-size: 18px;
 	transform: translate(-50%, -50%);
   color: white;
   font-weight: bold;
@@ -54,7 +64,6 @@ $grid-column-gutter: (
 
 .t3-status {
   margin-top: 20px;
-  margin-bottom: 10px;
 }
 
 .status-avatar-active {
