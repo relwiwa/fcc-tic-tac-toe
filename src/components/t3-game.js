@@ -5,6 +5,8 @@ import T3Controls from './t3-controls';
 import T3OptionsBoard from './t3-options-board';
 import T3Status from './t3-status';
 
+import '../styles/t3-styles.scss';
+
 import SPEX from '../data/t3-spex';
 
 class T3Game extends Component {

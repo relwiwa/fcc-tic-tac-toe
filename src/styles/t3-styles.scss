@@ -1,55 +1,36 @@
-// Customization
+$primaryColor:      #1779ba;
+$activeColor:       #ffae00;
+$staticColor:       #378fff;
 
-$foundation-palette: (
-  primary: #1779ba,
-  secondary: #767676,
-  success: #3adb76,
-  warning: #ffae00,
-  alert: #cc4b37,
-  selection: #ffae00,
-  static: #378fff,
-);
+$borderColor:       #ffffff;
 
-$grid-column-gutter: (
-  small: 0px,
-  medium: 0px,
-);
+.t3-cell.column {
+  padding-right: 5px;
+  padding-left: 5px;
+}
 
-$breakpoints: (
-  small: 0,
-  medium: 500px,
-  large: 800px,
-  xlarge: 1000px,
-);
-
-$breakpoint-classes: (small medium large xlarge);
-
-$borderColor: #ffffff;
-
-@import '../../node_modules/foundation-sites/scss/foundation.scss';
-
-@include foundation-everything;
+.t3-cell.column-block {
+  margin-bottom: 10px;
+}
 
 .t3-cell div {
   position: relative;
   width: 100%;
   padding-bottom: 100%;
-  border:5px solid $borderColor;
-  background: map-get($foundation-palette, primary);
+  background: $primaryColor;
 }
 
 .t3-cell div.active {
-  background: map-get($foundation-palette, selection);
+  background: $activeColor;
 }
 
 .t3-cell div.static {
-  background: map-get($foundation-palette, static);
+  background: $staticColor;
 }
-
 
 .t3-cell div.hoverable:hover {
   cursor:pointer;
-  background:scale-color(map-get($foundation-palette, primary), $lightness: -15%)
+  background:scale-color($primaryColor, $lightness: -15%)
 }
 
 .t3-cell span {
@@ -68,7 +49,7 @@ $borderColor: #ffffff;
 
 .status-avatar-active {
   font-weight: bold;
-  color: map-get($foundation-palette, selection);
+  color: $activeColor;
 }
 
 .t3-controls {

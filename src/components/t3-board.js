@@ -10,7 +10,7 @@ const T3Board = (props) => {
 
   return (
     <div className="t3-board row">
-      <div className="column medium-offset-1 medium-10 large-offset-2 large-8 xlarge-offset-3 xlarge-6">
+      <div className="column medium-offset-1 medium-10 large-offset-3 large-6">
         {(player1 !== null && gameStatus !== null) && <T3Status
           currentPlayer={currentPlayer}
           difficulty={gameMode === SPEX.gameMode.demo ? null : difficulty}
