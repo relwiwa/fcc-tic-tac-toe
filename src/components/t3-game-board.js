@@ -331,8 +331,8 @@ class T3GameBoard extends Component {
   updateWinningCells(cellSpex) {
     const { currentPlayer, gameHistory } = this.props;
     const currentResult = gameHistory[gameHistory.length - 1];
+    let newCellSpex = cellSpex;
     if (currentResult.winner !== null) {
-      let newCellSpex = cellSpex;
       const winningCells = currentResult.cells;
       for (let i = 0; i < winningCells.length; i++) {
         let winningCell = newCellSpex[winningCells[i]];
@@ -347,7 +347,11 @@ class T3GameBoard extends Component {
       }
       return newCellSpex;
     }
-    return cellSpex;
+    else {
+      newCellSpex[4].content = `It's a tie`;
+      newCellSpex[4].status = 'static';
+    }
+    return newCellSpex;
   }
 
   render() {
