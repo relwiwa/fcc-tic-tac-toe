@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import T3GameBoard from './t3-game-board';
 import T3Controls from './t3-controls';
 import T3OptionsBoard from './t3-options-board';
-import T3Status from './t3-status';
 
 import '../styles/t3-styles.scss';
 
@@ -120,6 +119,15 @@ class T3Game extends Component {
     });
   }
 
+  handleStopCurrentGame() {
+    this.setState({
+      board: '---------',
+      currentPlayer: this.setupCurrentPlayer(),
+      gameStatus: SPEX.gameStatus.ended,
+      showOptions: true
+    });    
+  }
+
   setupCurrentPlayer() {
     const { difficulty, gameMode } = this.state;
     if (difficulty === SPEX.difficulty.medium || gameMode === SPEX.gameMode.twoPlayer) {
@@ -195,6 +203,7 @@ class T3Game extends Component {
           onSetupGame={() => this.handleSetupGame()}
           onSetupInitialGame={() => this.handleSetupInitialGame()}
           onShowOptions={() => this.setState({ showOptions: true })}
+          onStopCurrentGame={() => this.handleStopCurrentGame()}
         />
       </div>
     );

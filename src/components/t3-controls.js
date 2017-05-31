@@ -4,7 +4,7 @@ import SPEX from '../data/t3-spex';
 
 const T3Controls = (props) => {
   const { difficulty, gameMode, gameStatus, numberOfRounds, player1, showOptions } = props;
-  const { onSetupInitialGame, onShowOptions, onSetupGame } = props;
+  const { onSetupInitialGame, onShowOptions, onSetupGame, onStopCurrentGame } = props;
 
   return (
     <div className="t3-controls row">
@@ -17,7 +17,11 @@ const T3Controls = (props) => {
           {(gameMode !== SPEX.gameMode.demo && gameStatus === SPEX.gameStatus.ended && !showOptions) && <button
             className="button primary text-center"
             onClick={onShowOptions}
-          >Change options</button>}
+          >Change Options</button>}
+          {(gameMode !== SPEX.gameMode.demo && gameStatus === SPEX.gameStatus.started && !showOptions) && <button
+            className="button primary text-center"
+            onClick={onStopCurrentGame}
+          >Stop Current Game</button>}
           {(gameMode === SPEX.gameMode.onePlayer && gameStatus !== SPEX.gameStatus.started && player1.avatar !== null && difficulty !== null) && <button
             className="button primary text-center"
             onClick={onSetupGame}
@@ -25,7 +29,7 @@ const T3Controls = (props) => {
           {(gameMode === SPEX.gameMode.twoPlayer && gameStatus !== SPEX.gameStatus.started && player1.avatar !== null) && <button
             className="button primary text-center"
             onClick={onSetupGame}
-          >Play {numberOfRounds > 0 ? ' again' : null}</button>}
+          >Play {numberOfRounds > 0 ? ' Again' : null}</button>}
         </div>
       </div>
     </div>
