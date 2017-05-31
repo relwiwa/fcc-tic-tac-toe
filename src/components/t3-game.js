@@ -14,17 +14,18 @@ class T3Game extends Component {
     super(props);
     this.state = {
       board: '---------',
-      currentPlayer: null, // player1 object || player2 object
-      demoTimeout: null,
+      currentPlayer: null, // player1 || player2
       difficulty: null, // just-kiddin || regular || impossible
       gameHistory: [], // user || ai || tie
       gameMode: null,
       gameStatus: null,
       player1: {
+        name: SPEX.player.player1,
         avatar: null,
         type: null,
       },
       player2: {
+        name: SPEX.player.player2,
         avatar: null,
         type: null,
       },
@@ -42,7 +43,7 @@ class T3Game extends Component {
     newState.player1 = player1;
     newState.player1.avatar = avatar;
     newState.player2 = player2;
-    newState.player2.avatar = avatar === SPEX.avatar.x ? SPEX.avatar.o : SPEX.avatar.x; 
+    newState.player2.avatar = (avatar === SPEX.avatar.x ? SPEX.avatar.o : SPEX.avatar.x); 
     this.setState(newState);
   }
 
@@ -57,9 +58,9 @@ class T3Game extends Component {
     let newState = {}
     newState.gameMode = gameMode;
     newState.player1 = player1;
-    newState.player1.type = SPEX.player.user;
+    newState.player1.type = SPEX.player.type.user;
     newState.player2 = player2;
-    newState.player2.type = gameMode === SPEX.gameMode.onePlayer ? SPEX.player.ai : SPEX.player.user;
+    newState.player2.type = (gameMode === SPEX.gameMode.onePlayer ? SPEX.player.type.ai : SPEX.player.type.user);
     this.setState(newState);
   }
 
@@ -68,7 +69,7 @@ class T3Game extends Component {
     let newState = {};
     if (boardStatus.gameOver === false) {
       newState.board = newBoard;
-      newState.currentPlayer = (currentPlayer === player1) ? player2 : player1;
+      newState.currentPlayer = (currentPlayer === SPEX.player.name.player1) ? SPEX.player.name.player2 : SPEX.player.name.player1;
       this.setState(newState);
     }
     else {
@@ -76,7 +77,7 @@ class T3Game extends Component {
       newState.gameStatus = SPEX.gameStatus.ended;
       newState.gameHistory = gameHistory.concat(boardStatus);
       if (this.state.gameMode === SPEX.gameMode.demo) {
-        newState.demoTimeout = window.setTimeout(() => {
+        this.demoTimeout = window.setTimeout(() => {
           this.setupDemoGame();
         }, SPEX.timeoutDemoGame)
       }
@@ -85,22 +86,23 @@ class T3Game extends Component {
   }
 
   handleSetupInitialGame() {
-    if (this.state.demoTimeout !== null) {
-      clearTimeout(this.state.demoTimeout);
+    if (this.demoTimeout !== null) {
+      clearTimeout(this.demoTimeout);
     }
     this.setState({
       board: '---------',
       currentPlayer: null,
-      demoTimeout: null,
       difficulty: null,
       gameMode: null,
       gameHistory: [],
       gameStatus: null,
       player1: {
+        name: SPEX.player.name.player1,
         avatar: null,
         type: null,
       },
       player2: {
+        name: SPEX.player.name.player2,
         avatar: null,
         type: null,
       },
@@ -119,37 +121,39 @@ class T3Game extends Component {
   }
 
   setupCurrentPlayer() {
-    const { difficulty, gameMode, player1, player2 } = this.state;
+    const { difficulty, gameMode } = this.state;
     if (difficulty === SPEX.difficulty.medium || gameMode === SPEX.gameMode.twoPlayer) {
-      return (Math.random() > 0.5) ? player1 : player2;        
+      return (Math.random() > 0.5) ? SPEX.player.name.player1 : SPEX.player.name.player2;        
     }
     else if (difficulty === SPEX.difficulty.easy) {
-      return player1;
+      return SPEX.player.name.player1;
     }
     else {
-      return player2;
+      return SPEX.player.name.player2;
     }
   }
 
   setupDemoGame() {
     const player1 = {
-      type: SPEX.player.ai,
+      name: SPEX.player.name.player1,
+      type: SPEX.player.type.ai,
       avatar: SPEX.avatar.x,
     }
     const player2 = {
-      type: SPEX.player.ai,
+      name: SPEX.player.name.player2,
+      type: SPEX.player.type.ai,
       avatar: SPEX.avatar.o,
     }
     this.setState({
       board: '---------',
-      currentPlayer: player1,
+      currentPlayer: SPEX.player.name.player1,
       difficulty: SPEX.difficulty.medium,
       gameMode: SPEX.gameMode.demo,
       gameStatus: SPEX.gameStatus.started,
       player1: player1,
       player2: player2,
       showOptions: false,
-    });    
+    });   
   }
 
   render() {

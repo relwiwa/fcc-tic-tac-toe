@@ -5,7 +5,7 @@ const T3Cell = (props) => {
   const { onClick } = props;
   
   return (
-    <div className={'t3-cell column column-block text-center'}>
+    <div className="t3-cell column column-block text-center">
       <div
         className={status + (onClick ? ' hoverable' : '')}
         onClick={(onClick) ? (event) => onClick(event) : null}

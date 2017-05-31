@@ -17,17 +17,11 @@ import SPEX from '../data/t3-spex';
  * @callback onMove send newBoard and boardStatus back to parent component
  */
 class T3GameBoard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timeoutAiMove: null
-    };
-  }
 
   componentDidMount() {
     const { currentPlayer } = this.props;
     this.boardStati = {};
-    if (currentPlayer.type === SPEX.player.ai) {
+    if (this.props[currentPlayer].type === SPEX.player.type.ai) {
       this.timeoutAiMove = window.setTimeout(() => {
         this.getAiMove();
       }, SPEX.timeoutAiMove)
@@ -36,7 +30,7 @@ class T3GameBoard extends Component {
 
   componentDidUpdate() {
     const { currentPlayer, difficulty, gameStatus } = this.props;
-    if (gameStatus === SPEX.gameStatus.started && currentPlayer.type === SPEX.player.ai) {
+    if (gameStatus === SPEX.gameStatus.started && this.props[currentPlayer].type === SPEX.player.type.ai) {
       this.timeoutAiMove = window.setTimeout(() => {
         this.getAiMove();
       }, SPEX.timeoutAiMove);
@@ -63,7 +57,7 @@ class T3GameBoard extends Component {
     if (board === '---------') {
       return Math.floor(Math.random() * 8);
     }
-    let aiMove = this.minimax(board, currentPlayer)
+    let aiMove = this.minimax(board, currentPlayer);
     return aiMove.cell;
   }
 
@@ -127,6 +121,7 @@ class T3GameBoard extends Component {
 					}
 				}
 
+        // game ended in tie
 				if (emptyCells === 0 && result.gameOver === false) {
 					result.gameOver = true;
 					result.winner = null;
@@ -159,7 +154,7 @@ class T3GameBoard extends Component {
    * - evaluates board and turn in relation to currentPlayer
    *   
    * @param board
-   * @param turn
+   * @param turn is respective currentPlayer
    * @return bestMove object with cell property
    * 
    * Minimax implementation adapted from:
@@ -174,7 +169,7 @@ class T3GameBoard extends Component {
         return { result: 0 };
       }
       else {
-        if (boardStatus.winner === currentPlayer) {
+        if (boardStatus.winner.name === currentPlayer) {
           return { result: 30 };
         }
         else {
@@ -196,11 +191,11 @@ class T3GameBoard extends Component {
       // store move object with result in moves array
       for (let i = 0; i < emptyCells.length; i++) {
         let move = {
-          avatar: turn.avatar,
+          avatar: this.props[turn].avatar,
           cell: emptyCells[i]
         };
         const newBoard = board.substr(0, move.cell) + move.avatar + board.substr(move.cell + 1);
-        const result = this.minimax(newBoard, (turn === player1 ? player2 : player1));
+        const result = this.minimax(newBoard, (turn === SPEX.player.name.player1 ? SPEX.player.name.player2 : SPEX.player.name.player1));
         move.result = result.result;
         moves.push(move);
       }
@@ -283,7 +278,7 @@ class T3GameBoard extends Component {
   handleMove(cellId) {
     const { board, currentPlayer, onMove } = this.props;
     let newBoard = board.substr(0, cellId);
-    newBoard += currentPlayer.avatar;
+    newBoard += this.props[currentPlayer].avatar;
     newBoard += board.substr(cellId + 1);
     const boardStatus = this.getBoardStatus(newBoard);
     onMove(newBoard, boardStatus);
@@ -305,7 +300,7 @@ class T3GameBoard extends Component {
       let cellSpec = {};
       cellSpec.content = board[i] === '-' ? '' : board[i];
       if (gameStatus !== SPEX.gameStatus.ended) {
-        cellSpec.onClick = (currentPlayer.type === SPEX.player.user && board[i] === '-')
+        cellSpec.onClick = (this.props[currentPlayer].type === SPEX.player.type.user && board[i] === '-')
           ? (event) => this.handleMove(i)
           : null;
       }
@@ -323,14 +318,15 @@ class T3GameBoard extends Component {
    * - Updates the cell specs so that the three winning cells will be highlighted when
    *   rendered via T3Board
    * - The middle cell will contain a statement about the game status
-   * - If the game has not ended or there was a tie, the original cellSpex array will be returned
+   * - If the game has not ended, the original cellSpex array will be returned
    * 
-   * @param cellSpex: array with infor to render T3Board
+   * @param cellSpex: array with info to render T3Board
    * @return cellSpex: original array or updated array with cell specs
    */
   updateWinningCells(cellSpex) {
     const { currentPlayer, gameHistory } = this.props;
-    const currentResult = gameHistory[gameHistory.length - 1];
+    const amountGames = gameHistory.length;
+    const currentResult = gameHistory[amountGames - 1];
     let newCellSpex = cellSpex;
     if (currentResult.winner !== null) {
       const winningCells = currentResult.cells;
@@ -338,7 +334,13 @@ class T3GameBoard extends Component {
         let winningCell = newCellSpex[winningCells[i]];
         winningCell.status = 'active';
         if (i === 1) {
-          winningCell.content = currentPlayer.avatar + ' won';
+          winningCell.content = this.props[currentPlayer].avatar + ' won';
+          if (gameHistory.length > 1) {
+            const prevResult = gameHistory[amountGames - 2];
+            if (currentResult.winner === prevResult.winner) {
+              winningCell.content += ' again';
+            }
+          }
         }
         else {
           winningCell.content = '';

@@ -1,7 +1,13 @@
 const SPEX = {
   player: {
-    user: 'user',
-    ai: 'ai'
+    type: {
+      user: 'user',
+      ai: 'ai'
+    },
+    name: {
+      player1: 'player1',
+      player2: 'player2'
+    }
   },
   avatar: {
     x: 'x',
