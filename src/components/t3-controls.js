@@ -2,6 +2,8 @@ import React from 'react';
 
 import SPEX from '../data/t3-spex';
 
+import '../styles/t3-controls.scss';
+
 const T3Controls = (props) => {
   const { difficulty, gameMode, gameStatus, numberOfRounds, player1, showOptions } = props;
   const { onSetupInitialGame, onShowOptions, onSetupGame, onStopCurrentGame } = props;

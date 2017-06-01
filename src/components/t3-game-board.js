@@ -22,18 +22,16 @@ class T3GameBoard extends Component {
     const { currentPlayer } = this.props;
     this.boardStati = {};
     if (this.props[currentPlayer].type === SPEX.player.type.ai) {
-      this.timeoutAiMove = window.setTimeout(() => {
-        this.getAiMove();
-      }, SPEX.timeoutAiMove)
+      this.setupTimeoutAiMove();
     }
   }
 
   componentDidUpdate() {
     const { currentPlayer, difficulty, gameStatus } = this.props;
     if (gameStatus === SPEX.gameStatus.started && this.props[currentPlayer].type === SPEX.player.type.ai) {
-      this.timeoutAiMove = window.setTimeout(() => {
-        this.getAiMove();
-      }, SPEX.timeoutAiMove);
+      if (!this.timeoutAiMove) {
+        this.setupTimeoutAiMove();
+      }
     }
   }
 
@@ -311,6 +309,19 @@ class T3GameBoard extends Component {
       cellSpex = this.updateWinningCells(cellSpex);
     }
     return cellSpex;
+  }
+
+  /**
+   * @method setupTimeoutAiMove
+   * - Sets a timeout before next AI move gets calculated via getAiMove method
+   * - Duration of timeout according to SPEX.timeoutAiMove
+   * - Ensures that there is always just one timeout
+   */
+  setupTimeoutAiMove() {
+    this.timeoutAiMove = window.setTimeout(() => {
+      this.timeoutAiMove = null;
+      this.getAiMove();
+    }, SPEX.timeoutAiMove)
   }
 
   /**

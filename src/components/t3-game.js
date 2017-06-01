@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 
 import T3GameBoard from './t3-game-board';
 import T3Controls from './t3-controls';
+import T3Instructions from './t3-instructions';
 import T3OptionsBoard from './t3-options-board';
-
-import '../styles/t3-styles.scss';
 
 import SPEX from '../data/t3-spex';
 
@@ -28,6 +27,7 @@ class T3Game extends Component {
         avatar: null,
         type: null,
       },
+      showInstructions: false,
       showOptions: false,
     }
   }
@@ -105,6 +105,7 @@ class T3Game extends Component {
         avatar: null,
         type: null,
       },
+      showInstructions: this.state.showInstructions,
       showOptions: true,
     });
   }
@@ -126,6 +127,12 @@ class T3Game extends Component {
       gameStatus: SPEX.gameStatus.ended,
       showOptions: true
     });    
+  }
+
+  handleToggleInstructions() {
+    this.setState({
+      showInstructions: !this.state.showInstructions
+    });
   }
 
   setupCurrentPlayer() {
@@ -165,13 +172,16 @@ class T3Game extends Component {
   }
 
   render() {
-    const { board, currentPlayer, difficulty, gameHistory, gameMode, gameStatus, player1, player2, showOptions } = this.state;
+    const { board, currentPlayer, difficulty, gameHistory, gameMode, gameStatus, player1, player2, showInstructions, showOptions } = this.state;
 
     return (
       <div className="t3-game row column medium-8">
         <h1 className="text-center">
-          Tic Tac Toe
+          Tic Tac Toe <small className="fa fa-question-circle-o" onClick={() => this.handleToggleInstructions()}></small>
         </h1>
+        {showInstructions && <T3Instructions
+          onToggleInstructions={() => this.handleToggleInstructions()}
+        />}
         {showOptions && <T3OptionsBoard
           difficulty={difficulty}
           gameMode={gameMode}

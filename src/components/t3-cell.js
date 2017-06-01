@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../styles/t3-cell.scss';
+
 const T3Cell = (props) => {
   const { content, status } = props;
   const { onClick } = props;

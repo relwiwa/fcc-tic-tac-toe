@@ -27,6 +27,25 @@ const SPEX = {
     started: 'started',
     ended: 'ended'
   },
+  instructions: {
+    tabs: {
+      about: 'about',
+      rules: 'rules'
+    },
+    boards: [
+      {
+        location: 'Horizontal',
+        board: 'xxx------'
+      }, {
+        location: 'Vertical',
+        board: '-x--x--x-'        
+      }, {
+        location: 'Diagonal',
+        board: 'x---x---x'        
+      }
+    ]
+  },
+  
   randomMoveFactors: {
     easy: 0.2,
     medium: 0.8

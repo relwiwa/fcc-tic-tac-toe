@@ -2,6 +2,8 @@ import React from 'react';
 
 import SPEX from '../data/t3-spex';
 
+import '../styles/t3-status.scss';
+
 const T3Status = (props) => {
   const { currentPlayer, difficulty, player1, player2 } = props;
 
