@@ -1,6 +1,7 @@
 import React from 'react';
 
 import T3Board from './t3-board';
+import TabsContainer from '../reusable-components/tabs-container';
 
 import '../styles/t3-instructions.scss';
 import SPEX from '../data/t3-spex';
@@ -51,17 +52,12 @@ class T3Instructions extends React.Component {
     const { onToggleInstructions } = this.props;
 
     return (
-      <div className="t3-instructions grid-x">
-        <div className="cell">          
-          <ul className="menu horizontal">
-            <li className={this.state.tabSelected === SPEX.instructions.tabs.about ? 'active' : null}>
-              <a onClick={() => this.setState({tabSelected: SPEX.instructions.tabs.about})}>About</a>
-            </li>
-            <li className={this.state.tabSelected === SPEX.instructions.tabs.rules ? 'active' : null}>
-              <a onClick={() => this.setState({tabSelected: SPEX.instructions.tabs.rules})}>Rules</a>
-            </li>
-          </ul>
-          {tabSelected === SPEX.instructions.tabs.about && <div className="callout cell">
+      <div className="t3-instructions">
+        <TabsContainer
+          tabs={SPEX.instructions.tabs}
+          onToggleTabsContainer={onToggleInstructions}
+        >
+          <div className="callout cell">
             <h3 className="text-center">Tic Tac Toe Game</h3>
             <div className="grid-x grid-padding-x">
               <div className="cell medium-6">
@@ -87,20 +83,15 @@ class T3Instructions extends React.Component {
                 <p>You can find out more about the <a title="Show Tab with Rules of the Game" onClick={() => this.setState({tabSelected: SPEX.instructions.tabs.rules})}>rules of the game</a>.</p>
               </div>
             </div>
-          </div>}
-          {tabSelected === SPEX.instructions.tabs.rules && <div className="callout cell">
+          </div>
+          <div className="callout cell">
             <h3 className="text-center">Rules</h3>
             <p>You can win Tic Tac Toe in one of the following ways:</p>
             <div className="grid-x">
               {SPEX.instructions.boards.map((item, index) => this.renderBoard(item.location, item.board, index))}
             </div>
-          </div>}
-        </div>
-        <div className="close-instructions cell">
-          <ul className="menu horizontal align-right">
-            <li><a onClick={onToggleInstructions}>Close Instructions</a></li>
-          </ul>
-        </div>
+          </div>
+        </TabsContainer>
       </div>
     );
   }

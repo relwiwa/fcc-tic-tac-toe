@@ -1,46 +1,9 @@
 @import './t3.general.scss';
 
 .t3-instructions {
-  margin-bottom:15px;
-
-  .callout {
-    margin-bottom:0;
-  }
-
-  .menu {
-    position:relative;
-    top:1px;
-    z-index:100;
-    border:1px solid rgba(black, 0.25);
-    background:#eee;
-    padding-top:15px;
-
-    li {
-      display:inline-block;
-      margin-left: 10px;
-    }
-  }
-
   li.active {
-    position:relative;
-    top:1px;
-    background:white;
-    padding:0;
-    text-align:center;
-    border:1px solid rgba(black, 0.25);
-    border-bottom:none;
     a {
-      background:white;
       color:$primaryColor;
     }
-  }
-}
-
-.close-instructions {
-  .menu, .column {
-    position:relative;
-    top:-3px;
-    padding-top:0;
-    margin-top:0;
   }
 }

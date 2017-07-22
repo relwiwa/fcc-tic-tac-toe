@@ -28,10 +28,10 @@ const SPEX = {
     ended: 'ended'
   },
   instructions: {
-    tabs: {
-      about: 'about',
-      rules: 'rules'
-    },
+    tabs: [
+      'About',
+      'Rules'
+    ],
     boards: [
       {
         location: 'Horizontal',
