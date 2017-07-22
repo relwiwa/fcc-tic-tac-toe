@@ -7,4 +7,3 @@ config.devServer = {
 };
 
 module.exports = config;
-
