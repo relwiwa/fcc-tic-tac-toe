@@ -51,8 +51,8 @@ class T3Instructions extends React.Component {
     const { onToggleInstructions } = this.props;
 
     return (
-      <div className="t3-instructions row">
-        <div className="column small-12">          
+      <div className="t3-instructions grid-x">
+        <div className="cell">          
           <ul className="menu horizontal">
             <li className={this.state.tabSelected === SPEX.instructions.tabs.about ? 'active' : null}>
               <a onClick={() => this.setState({tabSelected: SPEX.instructions.tabs.about})}>About</a>
@@ -61,17 +61,17 @@ class T3Instructions extends React.Component {
               <a onClick={() => this.setState({tabSelected: SPEX.instructions.tabs.rules})}>Rules</a>
             </li>
           </ul>
-          {tabSelected === SPEX.instructions.tabs.about && <div className="callout column small-12">
+          {tabSelected === SPEX.instructions.tabs.about && <div className="callout cell">
             <h3 className="text-center">Tic Tac Toe Game</h3>
-            <div className="row">
-              <div className="column small-12 medium-6">
+            <div className="grid-x grid-padding-x">
+              <div className="cell medium-6">
                 <p>In Tic Tac Toe, two players, X and O, take turns marking the spaces in a 3x3 grid.</p>
                 <p>The player who succeeds in placing three of their marks in a horizontal, vertical, or diagonal row wins the game.</p>
                 <p>The game can be traced back to ancient Egypt.</p>
                 <p>These days, it is also known as Noughts and Crosses, Tick Tack Toe, Tick Tat Toe and Xs and Os.</p>
                 <p>Learn more about the game on <a href="https://en.wikipedia.org/wiki/Tic-tac-toe" title="Wikipedia page featuring Tic Tac Toe game">Wikipedia</a>.</p>
               </div>
-              <div className="column small-12 medium-6">
+              <div className="cell medium-6">
                 <p>In this implementation you can chose to:</p>
                 <ul>
                   <li>play against another human opponent,</li>
@@ -88,16 +88,16 @@ class T3Instructions extends React.Component {
               </div>
             </div>
           </div>}
-          {tabSelected === SPEX.instructions.tabs.rules && <div className="callout column small-12">
+          {tabSelected === SPEX.instructions.tabs.rules && <div className="callout cell">
             <h3 className="text-center">Rules</h3>
             <p>You can win Tic Tac Toe in one of the following ways:</p>
-            <div className="row">
+            <div className="grid-x">
               {SPEX.instructions.boards.map((item, index) => this.renderBoard(item.location, item.board, index))}
             </div>
           </div>}
         </div>
-        <div className="close-instructions column small-12">
-          <ul className="menu horizontal text-right">
+        <div className="close-instructions cell">
+          <ul className="menu horizontal align-right">
             <li><a onClick={onToggleInstructions}>Close Instructions</a></li>
           </ul>
         </div>

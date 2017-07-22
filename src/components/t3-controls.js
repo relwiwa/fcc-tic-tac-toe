@@ -9,9 +9,9 @@ const T3Controls = (props) => {
   const { onSetupInitialGame, onShowOptions, onSetupGame, onStopCurrentGame } = props;
 
   return (
-    <div className="t3-controls row">
-      <div className="text-center column small-12">
-        <div className="button-group">
+    <div className="t3-controls grid-x">
+      <div className="text-center cell">
+        <div className="button-group align-center">
           {(gameMode === SPEX.gameMode.demo) && <button
             className="button primary text-center"
             onClick={onSetupInitialGame}

@@ -34,7 +34,7 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
-    "foundation-sites": "^6.3.1",
+    "foundation-sites": "^6.4.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1"
   }

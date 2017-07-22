@@ -9,8 +9,8 @@ const T3Board = (props) => {
   const { cellSpex, currentPlayer, difficulty, gameHistory, gameMode, gameStatus, player1, player2 } = props;
 
   return (
-    <div className="t3-board row">
-      <div className="column medium-offset-1 medium-10 large-offset-3 large-6">
+    <div className="t3-board grid-x">
+      <div className="cell medium-offset-1 medium-10 large-offset-2 large-8">
         {(player1 !== null && gameStatus !== null) && <T3Status
           currentPlayer={currentPlayer}
           difficulty={gameMode === SPEX.gameMode.demo ? null : difficulty}
@@ -18,7 +18,7 @@ const T3Board = (props) => {
           player1={player1}
           player2={player2}
         />}
-        <div className="row small-up-3">
+        <div className="grid-x small-up-3">
           {cellSpex.map((cellSpec) => {
             return (
               <T3Cell

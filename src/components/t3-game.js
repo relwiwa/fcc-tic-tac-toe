@@ -175,46 +175,52 @@ class T3Game extends Component {
     const { board, currentPlayer, difficulty, gameHistory, gameMode, gameStatus, player1, player2, showInstructions, showOptions } = this.state;
 
     return (
-      <div className="t3-game row column medium-8">
-        <h1 className="text-center">
-          Tic Tac Toe <small className="fa fa-question-circle-o" onClick={() => this.handleToggleInstructions()}></small>
-        </h1>
-        {showInstructions && <T3Instructions
-          onToggleInstructions={() => this.handleToggleInstructions()}
-        />}
-        {showOptions && <T3OptionsBoard
-          difficulty={difficulty}
-          gameMode={gameMode}
-          gameStatus={gameStatus}
-          player1={player1}
-          player2={player2}
-          onChangeAvatar={(avatar) => this.handleChangeAvatar(avatar)}
-          onChangeDifficulty={(difficulty) => this.handleChangeDifficulty(difficulty)}
-          onChangeGameMode={(gameMode) => this.handleChangeGameMode(gameMode)}
-        />}
-        {((gameStatus === SPEX.gameStatus.started || gameStatus === SPEX.gameStatus.ended) && !showOptions) && <T3GameBoard
-          board={board}
-          currentPlayer={currentPlayer}
-          difficulty={difficulty}
-          gameHistory={gameHistory}
-          gameMode={gameMode}
-          gameStatus={gameStatus}
-          player1={player1}
-          player2={player2}
-          onMove={(newBoard, boardStatus) => this.handleMove(newBoard, boardStatus)}
-        />}
-        <T3Controls
-          difficulty={difficulty}
-          gameMode={gameMode}
-          gameStatus={gameStatus}
-          numberOfRounds={gameHistory.length}
-          player1={player1}
-          showOptions={showOptions}
-          onSetupGame={() => this.handleSetupGame()}
-          onSetupInitialGame={() => this.handleSetupInitialGame()}
-          onShowOptions={() => this.setState({ showOptions: true })}
-          onStopCurrentGame={() => this.handleStopCurrentGame()}
-        />
+      <div className="t3-game grid-container grid-container-padded">
+        <div className="grid-x align-center">
+          <div className="cell">
+            <h1 className="text-center">
+              Tic Tac Toe <small className="fa fa-question-circle-o" onClick={() => this.handleToggleInstructions()}></small>
+            </h1>
+            {showInstructions && <T3Instructions
+              onToggleInstructions={() => this.handleToggleInstructions()}
+            />}
+          </div>
+          <div className="cell medium-8">
+            {showOptions && <T3OptionsBoard
+              difficulty={difficulty}
+              gameMode={gameMode}
+              gameStatus={gameStatus}
+              player1={player1}
+              player2={player2}
+              onChangeAvatar={(avatar) => this.handleChangeAvatar(avatar)}
+              onChangeDifficulty={(difficulty) => this.handleChangeDifficulty(difficulty)}
+              onChangeGameMode={(gameMode) => this.handleChangeGameMode(gameMode)}
+            />}
+            {((gameStatus === SPEX.gameStatus.started || gameStatus === SPEX.gameStatus.ended) && !showOptions) && <T3GameBoard
+              board={board}
+              currentPlayer={currentPlayer}
+              difficulty={difficulty}
+              gameHistory={gameHistory}
+              gameMode={gameMode}
+              gameStatus={gameStatus}
+              player1={player1}
+              player2={player2}
+              onMove={(newBoard, boardStatus) => this.handleMove(newBoard, boardStatus)}
+            />}
+            <T3Controls
+              difficulty={difficulty}
+              gameMode={gameMode}
+              gameStatus={gameStatus}
+              numberOfRounds={gameHistory.length}
+              player1={player1}
+              showOptions={showOptions}
+              onSetupGame={() => this.handleSetupGame()}
+              onSetupInitialGame={() => this.handleSetupInitialGame()}
+              onShowOptions={() => this.setState({ showOptions: true })}
+              onStopCurrentGame={() => this.handleStopCurrentGame()}
+            />
+          </div>
+        </div>
       </div>
     );
   }
