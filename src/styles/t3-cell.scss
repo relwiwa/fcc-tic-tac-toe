@@ -36,5 +36,12 @@
     transform: translate(-50%, -50%);
     color: white;
     font-weight: bold;
+    @media screen and (min-width: 25em) {
+      font-size: 24px;
+    }
+    @media screen and (min-width: 40em) {
+      font-size: 26px;
+    }
   }
+
 }

@@ -5,12 +5,14 @@ import T3Status from './t3-status';
 
 import SPEX from '../data/t3-spex';
 
+import '../styles/t3-board.scss';
+
 const T3Board = (props) => {
   const { cellSpex, currentPlayer, difficulty, gameHistory, gameMode, gameStatus, player1, player2 } = props;
 
   return (
-    <div className="t3-board grid-x">
-      <div className="cell medium-offset-1 medium-10 large-offset-2 large-8">
+    <div className="t3-board grid-x align-center">
+      <div className="cell medium-9 large-8">
         {(player1 !== null && gameStatus !== null) && <T3Status
           currentPlayer={currentPlayer}
           difficulty={gameMode === SPEX.gameMode.demo ? null : difficulty}
