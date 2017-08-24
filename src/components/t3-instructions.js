@@ -69,15 +69,15 @@ class T3Instructions extends React.Component {
               </div>
               <div className="cell medium-6">
                 <p>In this implementation you can chose to:</p>
-                <ul>
-                  <li>play against another human opponent,</li>
-                  <li>or play against an AI opponent.</li>
+                <ul className="fa-ul">
+                  <li><i className="fa-li fa fa-user"></i>play against another human opponent,</li>
+                  <li><i className="fa-li fa fa-microchip"></i>or play against an AI opponent.</li>
                 </ul>
                 <p>There are three difficulties available:</p>
-                <ul>
-                  <li>Easy: AI plays totally random</li>
-                  <li>Medium: AI occassionally makes mistakes</li>
-                  <li>Hard: AI makes no mistakes</li>
+                <ul className="fa-ul">
+                  <li><i className="fa-li fa fa-gamepad"></i>Easy: AI plays totally random</li>
+                  <li><i className="fa-li fa fa-gamepad"></i>Medium: AI occassionally makes mistakes</li>
+                  <li><i className="fa-li fa fa-gamepad"></i>Hard: AI makes no mistakes</li>
                 </ul>
                 <p>There's also a demo mode which lets you watch two AI players playing against each other on medium difficulty.</p>
                 <p>You can find out more about the <a title="Show Tab with Rules of the Game" onClick={() => this.setState({tabSelected: SPEX.instructions.tabs.rules})}>rules of the game</a>.</p>

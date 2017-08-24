@@ -7,6 +7,7 @@
 @include foundation-flex-classes;
 @include foundation-menu;
 @include foundation-typography;
+@include foundation-visibility-classes;
 @include foundation-xy-grid-classes(
   $base-grid: true,
   $margin-grid: false,
@@ -16,3 +17,11 @@
   $offset: true,
   $vertical-grid: false
 );
+
+/* Font Awesome Global Styles */
+
+.fa-ul {
+  .fa-li {
+    padding-top:2px;
+  }
+}

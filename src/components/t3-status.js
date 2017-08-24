@@ -16,11 +16,15 @@ const T3Status = (props) => {
     }
   };
 
+  const renderAvatarIcon = (avatarIcon) => {
+    return <i className={'fa ' + SPEX.avatarIcons[avatarIcon]}></i>;
+  };
+
   return (
     <div className="t3-status grid-x text-center">
-      <h4 className={'cell small-2' + (currentPlayer !== null && currentPlayer === SPEX.player.name.player1 ? ' status-avatar-active' : '')}>{player1.avatar}</h4>
+      <h4 className={'cell small-2' + (currentPlayer !== null && currentPlayer === SPEX.player.name.player1 ? ' status-avatar-active' : '')}>{renderAvatarIcon(player1.avatar)}</h4>
       <h4 className="cell small-8">{renderDifficulty()}</h4>
-      <h4 className={'cell small-2' + (currentPlayer !== null && currentPlayer === SPEX.player.name.player2 ? ' status-avatar-active' : '')}>{player2.avatar}</h4>
+      <h4 className={'cell small-2' + (currentPlayer !== null && currentPlayer === SPEX.player.name.player2 ? ' status-avatar-active' : '')}>{renderAvatarIcon(player2.avatar)}</h4>
     </div>
   );
 }

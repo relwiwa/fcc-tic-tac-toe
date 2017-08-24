@@ -13,6 +13,10 @@ const SPEX = {
     x: 'x',
     o: 'o'
   },
+  avatarIcons: {
+    x: 'fa-times',
+    o: 'fa-circle-o'
+  },
   difficulty: {
     easy: 'Easy',
     medium: 'Medium',
