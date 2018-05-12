@@ -1,7 +1,7 @@
 import React from 'react';
 
 import T3Board from './t3-board';
-import TabsContainer from '../reusable-components/tabs-container';
+import TabsContainer from '../../../reusable-components/tabs-container/tabs-container';
 
 import '../styles/t3-instructions.scss';
 import SPEX from '../data/t3-spex';

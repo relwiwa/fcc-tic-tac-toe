@@ -1,3 +1,4 @@
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 import SPEX from '../data/t3-spex';
@@ -16,9 +17,7 @@ const T3Status = (props) => {
     }
   };
 
-  const renderAvatarIcon = (avatarIcon) => {
-    return <i className={'fa ' + SPEX.avatarIcons[avatarIcon]}></i>;
-  };
+  const renderAvatarIcon = (avatarIcon) => <FontAwesomeIcon icon={SPEX.avatarIcons[avatarIcon]} />;
 
   return (
     <div className="t3-status grid-x text-center">

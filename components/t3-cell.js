@@ -1,3 +1,4 @@
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 import SPEX from '../data/t3-spex';
@@ -12,7 +13,7 @@ const T3Cell = (props) => {
     const { avatarIcons, avatar: { x, o } } = SPEX;
 
     if (content === x || content === o) {
-      return <i className={'fa fa-2x ' + avatarIcons[content]}></i>;
+      return <FontAwesomeIcon icon={avatarIcons[content]} size="2x" />;
     }
     else {
       return content;

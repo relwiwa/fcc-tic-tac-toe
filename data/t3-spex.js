@@ -14,8 +14,8 @@ const SPEX = {
     o: 'o'
   },
   avatarIcons: {
-    x: 'fa-times',
-    o: 'fa-circle-o'
+    x: 'times',
+    o: 'circle',
   },
   difficulty: {
     easy: 'Easy',

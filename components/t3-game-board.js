@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import React, { Component, Fragment } from 'react';
 
 import T3Board from './t3-board';
 
@@ -345,7 +346,7 @@ class T3GameBoard extends Component {
         let winningCell = newCellSpex[winningCells[i]];
         winningCell.status = 'active';
         if (i === 1) {
-          winningCell.content = this.props[currentPlayer].avatar + ' won';
+          winningCell.content = <Fragment><FontAwesomeIcon icon={SPEX.avatarIcons[this.props[currentPlayer].avatar]} /> won</Fragment>;
           if (gameHistory.length > 1) {
             const prevResult = gameHistory[amountGames - 2];
             if (currentResult.winner === prevResult.winner) {
