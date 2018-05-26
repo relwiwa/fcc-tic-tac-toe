@@ -1,4 +1,4 @@
-@import './t3.general.scss';
+@import '../../../styles/color-scheme.scss';
 
 .t3-cell.cell {
   padding-right: 5px;
@@ -16,11 +16,11 @@
   }
   
   div.active {
-    background: $activeColor;
+    background: $secondaryColor;
   }
 
   div.static {
-    background: $staticColor;
+    background: $primaryColorDark;
   }
 
   div.hoverable:hover {
@@ -34,7 +34,7 @@
     left: 50%;
     font-size: 18px;
     transform: translate(-50%, -50%);
-    color: white;
+    color: $neutralColor;
     font-weight: bold;
     @media screen and (min-width: 25em) {
       font-size: 24px;

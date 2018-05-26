@@ -1,6 +1,4 @@
-@import './t3.general.scss';
-
-@import './t3.general.scss';
+@import '../../../styles/color-scheme.scss';
 
 .t3-status {
   margin-top: 20px;
@@ -8,5 +6,5 @@
 
 .status-avatar-active {
   font-weight: bold;
-  color: $activeColor;
+  color: $secondaryColor;
 }
