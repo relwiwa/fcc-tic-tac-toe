@@ -1,3 +1,4 @@
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import React from 'react';
 
 import T3Board from './t3-board';
@@ -54,10 +55,11 @@ class T3Instructions extends React.Component {
     return (
       <div className="t3-instructions">
         <TabsContainer
+          activeTab={0}
           tabs={SPEX.instructions.tabs}
           onToggleTabsContainer={onToggleInstructions}
         >
-          <div className="callout cell">
+          <div className="cell">
             <h3 className="text-center">Tic Tac Toe Game</h3>
             <div className="grid-x grid-padding-x">
               <div className="cell medium-6">
@@ -70,21 +72,21 @@ class T3Instructions extends React.Component {
               <div className="cell medium-6">
                 <p>In this implementation you can chose to:</p>
                 <ul className="fa-ul">
-                  <li><i className="fa-li fa fa-user"></i>play against another human opponent,</li>
-                  <li><i className="fa-li fa fa-microchip"></i>or play against an AI opponent.</li>
+                  <li><FontAwesomeIcon icon="user" listItem />play against another human opponent,</li>
+                  <li><FontAwesomeIcon icon="microchip" listItem />or play against an AI opponent.</li>
                 </ul>
                 <p>There are three difficulties available:</p>
                 <ul className="fa-ul">
-                  <li><i className="fa-li fa fa-gamepad"></i>Easy: AI plays totally random</li>
-                  <li><i className="fa-li fa fa-gamepad"></i>Medium: AI occassionally makes mistakes</li>
-                  <li><i className="fa-li fa fa-gamepad"></i>Hard: AI makes no mistakes</li>
+                  <li><FontAwesomeIcon icon={"gamepad"} listItem />Easy: AI plays totally random</li>
+                  <li><FontAwesomeIcon icon={"gamepad"} listItem />Medium: AI occassionally makes mistakes</li>
+                  <li><FontAwesomeIcon icon={"gamepad"} listItem />Hard: AI makes no mistakes</li>
                 </ul>
                 <p>There's also a demo mode which lets you watch two AI players playing against each other on medium difficulty.</p>
                 <p>You can find out more about the <a title="Show Tab with Rules of the Game" onClick={() => this.setState({tabSelected: SPEX.instructions.tabs.rules})}>rules of the game</a>.</p>
               </div>
             </div>
           </div>
-          <div className="callout cell">
+          <div className="cell">
             <h3 className="text-center">Rules</h3>
             <p>You can win Tic Tac Toe in one of the following ways:</p>
             <div className="grid-x">

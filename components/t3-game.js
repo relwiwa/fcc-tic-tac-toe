@@ -1,3 +1,4 @@
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 
 import T3GameBoard from './t3-game-board';
@@ -179,13 +180,13 @@ class T3Game extends Component {
         <div className="grid-x align-center">
           <div className="cell">
             <h1 className="text-center">
-              Tic Tac Toe <small className="fa fa-question-circle-o" onClick={() => this.handleToggleInstructions()}></small>
+              Tic Tac Toe <small style={{position: 'relative', bottom: '4px'}}><FontAwesomeIcon icon="question-circle" onClick={() => this.handleToggleInstructions()} /></small>
             </h1>
             {showInstructions && <T3Instructions
               onToggleInstructions={() => this.handleToggleInstructions()}
             />}
           </div>
-          <div className="cell medium-8">
+          {!showInstructions && <div className="cell medium-8">
             {showOptions && <T3OptionsBoard
               difficulty={difficulty}
               gameMode={gameMode}
@@ -219,7 +220,7 @@ class T3Game extends Component {
               onShowOptions={() => this.setState({ showOptions: true })}
               onStopCurrentGame={() => this.handleStopCurrentGame()}
             />
-          </div>
+          </div>}
         </div>
       </div>
     );
