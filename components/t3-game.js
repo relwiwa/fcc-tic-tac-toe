@@ -1,4 +1,4 @@
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { Component } from 'react';
 
 import T3GameBoard from './t3-game-board';
